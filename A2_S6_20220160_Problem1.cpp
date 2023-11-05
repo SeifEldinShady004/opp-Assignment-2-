@@ -1,3 +1,10 @@
+// File: A2_S6_20220160_Problem1.cpp
+// Purpose: This program will correct the spacing, capitalization, and ensure the sentence ends with a period as described in your request. It treats line breaks as spaces and compresses multiple spaces into a single space. 
+// Author:seif eldin shady abdelsalam
+// Section:S6
+// ID:20220160
+// TA:maya ahmed 
+// Date: 5 Nov 2023
 #include <iostream>
 #include <string>
 
