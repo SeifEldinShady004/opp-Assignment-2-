@@ -1,3 +1,10 @@
+// File: A2_S6_20220160_Problem 10.cpp
+// Purpose:this problam do the word are associated with their alternative words
+// Author:seif eldin shady abdelsalam
+// Section:S6
+// ID:20220160
+// TA:maya ahmed 
+// Date: 5 Nov 2023
 #include <iostream>
 #include <fstream>
 #include <string>
