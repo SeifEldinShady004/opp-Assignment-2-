@@ -1,3 +1,10 @@
+// File: A2_S6_20220018_Problem 6.cpp
+// Purpose:The purpose of the provided C++ program is to convert three integer numbers (n1, n2, and n3) into their binary representations and print the binary representations for each of these numbers. It demonstrates the use of a recursive function binaryPrint to perform the conversion and print the binary output.
+// Author:Ahmed hussien saad 
+// Section:S6
+// ID:20220018
+// TA:maya ahmed 
+// Date: 5 Nov 2023
 #include <iostream>
 using namespace std;
 void binaryPrint(int n) {
