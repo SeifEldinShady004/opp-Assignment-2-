@@ -1,3 +1,10 @@
+// File: A2_S6_20220018_Problem 9.cpp
+// Purpose:The purpose of the provided C++ program is to determine whether it's possible to reach a goal of having exactly 42 bears starting with a given number of bears and following a set of rules. The program defines a recursive function bears that checks if it's possible to reach 42 bears, given a certain number of bears and following specific rules.
+// Author:Ahmed hussien saad 
+// Section:S6
+// ID:20220018
+// TA:maya ahmed 
+// Date: 5 Nov 2023
 #include <iostream>
 using namespace std;
 bool bears(int n) {
