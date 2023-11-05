@@ -1,3 +1,10 @@
+// File: A2_S6_20220018_Problem 12.cpp
+// Purpose:he purpose of scanning a text file for potential phishing keywords and calculating a total point score based on the occurrences of these keywords in the file. This can be helpful in identifying suspicious or phishing content within a given text
+// Author:Ahmed hussien saad 
+// Section:S6
+// ID:20220018
+// TA:maya ahmed 
+// Date: 5 Nov 2023
 #include <iostream>
 #include <fstream>
 #include <string>
