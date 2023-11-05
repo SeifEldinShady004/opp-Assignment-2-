@@ -1,3 +1,10 @@
+// File: A2_S6_20220018_Problem 3.cpp
+// Purpose:The purpose of the provided C++ program is to define a split function that takes a target string and a delimiter string as input and splits the target string into a vector of substrings based on the delimiter. The program then demonstrates how to use this split function to split two different input strings.
+// Author:Ahmed hussien saad 
+// Section:S6
+// ID:20220018
+// TA:maya ahmed 
+// Date: 5 Nov 2023
 #include <iostream>
 #include <vector>
 #include <string>
