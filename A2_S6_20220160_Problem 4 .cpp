@@ -1,4 +1,10 @@
-
+// File: A2_S6_20220160_Problem 4 .cpp
+// Purpose: The program finds prime numbers 
+// Author:seif eldin shady abdelsalam
+// Section:S6
+// ID:20220160
+// TA:maya ahmed 
+// Date: 5 Nov 2023
 #include <iostream>
 #include <vector>
 
