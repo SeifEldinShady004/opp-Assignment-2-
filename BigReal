@@ -1,0 +1,59 @@
+#include "BigReal.h"
+#include <iostream>
+using namespace std;
+int main() {
+    cout<<"which operation do you want :\n"
+          "1- Adding two numbers \n"
+          "2- Subtracting to numbers \n"
+          "3- Comparing two numbers \n"
+          "4- Exit \n ";
+    int option;
+    bool exit = false;
+    while (!exit){
+        cin>>option;
+        BigReal r1,r2,r3;
+        switch (option) {
+            case 1:{
+                cout<<"Enter the two numbers\n";
+                cin>>r1>>r2;
+                if (r1 == BigReal("+$.$") || r2 == BigReal("+$.$")) {
+                    cout << "There is an ERROR\n";
+                    continue;
+                }
+                r3 = r1+r2;
+                r3.print();
+                break;
+            }
+            case 2:{
+                cout<<"Enter the two numbers\n";
+                cin>>r1>>r2;
+                if (r1 == BigReal("+$.$") || r2 == BigReal("+$.$")) {
+                    cout << "There is an ERROR\n";
+                    continue;
+                }
+                r3 = r1-r2;
+                r3.print();
+                break;
+            }
+            case 3:{
+                cout<<"Enter the two numbers\n";
+                cin>>r1>>r2;
+                if (r1 == BigReal("+$.$") || r2 == BigReal("+$.$")) {
+                    cout << "There is an ERROR\n";
+                    continue;
+                }
+                if(r1>r2)
+                    cout<<r1<<" is greater than "<<r2<<"\n";
+                else if(r1<r2)
+                    cout<<r1<<" is less than "<<r2<<"\n";
+                else if(r1 == r2)
+                    cout<<r1<<" equal "<<r2<<"\n";
+                break;
+            }
+            case 4:{
+                exit = true;
+                break;
+            }
+        }
+    }
+}
