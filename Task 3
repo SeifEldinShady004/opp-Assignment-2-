@@ -1,0 +1,219 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <map>
+#include <sstream>
+
+using namespace std ;
+class Memory{
+public:
+    map<int,int>cells;
+    void Set_Memory(int location, int value){
+        if(location>=0&&location<256)
+            cells[location] = value;
+        else {
+            cout << "ERROR \n";
+            exit(0);
+        }
+    }
+    int Get_Memory(int location){
+        if(cells.count(location)==1)
+            return cells[location];
+        else {
+            cout << "ERROR \n";
+            exit(0);
+        }
+    }
+};
+
+class Register{
+public:
+    map<int,int>reg;
+    void Set_Reg(int num, int value){
+        reg[num]=value;
+    }
+    int Get_Reg(int num){
+        if (reg.count(num)==1)
+            return reg[num];
+        else{
+            cout << "ERROR \n";
+            exit(0);
+        }
+    }
+};
+class operations{
+public:
+    static void Load_From_MemoryCell_To_Reg(Register& r, Memory& m , int location ,int num){
+
+        int v = m.Get_Memory(location);
+        r.Set_Reg(num,v);
+    }
+    static void Load_Value_To_Reg(Register& r , int num ,int value){
+        r.Set_Reg(num,value);
+    }
+    static void Store_From_Reg_To_MemoryCell(Register& r , Memory& m , int num, int location){
+        int v = r.Get_Reg(num);
+        m.Set_Memory(location,v);
+    }
+    static void Store_From_Reg_To_Screen(Register& r,int num){
+        int v = r.Get_Reg(num);
+        cout<<v<<"\n";
+    }
+    static void Move(Register& r,int num1 , int num2 ){
+        r.Set_Reg(num2,r.Get_Reg(num1));
+    }
+    static void Add(Register& r, int num1, int num2, int num3){
+        int v2=r.Get_Reg(num2);
+        if(v2>=127)
+           v2-=256;
+
+        int v3=r.Get_Reg(num3);
+        if(v3>=127)
+            v3-=256;
+
+        r.Set_Reg(num1,v2+v3);
+    }
+};
+class Machine{
+private:
+    Memory m;
+    Register reg1;
+    int counter;
+public:
+    void Display(){
+        cout<<"Registers : \n";
+        for (auto i : reg1.reg ) {
+            cout << "R" << i.first << " : ";
+            if(reg1.Get_Reg(i.first)<=15)
+                cout<<"0"<<reg1.Get_Reg(i.first)<<"\n";
+            else
+                cout<<reg1.Get_Reg(i.first)<<"\n";
+        }
+        cout<<"Memory : \n";
+        for(auto i : m.cells){
+            if(i.first<=15)
+                cout<<"0"<<i.first<<" ";
+            else
+                cout<<i.first<<" ";
+            if(m.Get_Memory(i.first)<=15)
+                cout<<"0"<<m.Get_Memory(i.first)<<"\n";
+            else
+                cout<<m.Get_Memory(i.first)<<"\n";
+        }
+    }
+    void Execute_Without_Display(vector<vector<int>>instructions){
+        for (counter = 0; counter < instructions.size() ; counter++) {
+            int opcode = instructions[counter][0];
+            int Index_Of_Register = instructions[counter][1];
+            switch (opcode) {
+                case 1:
+                    operations::Load_From_MemoryCell_To_Reg(reg1, m, instructions[counter][2],Index_Of_Register);
+                    break;
+                case 2:
+                    operations::Load_Value_To_Reg(reg1,Index_Of_Register,instructions[counter][2]);
+                    break;
+                case 3:
+                    if(instructions[counter][2] == 0)
+                        operations::Store_From_Reg_To_Screen(reg1,Index_Of_Register);
+                    else
+                        operations::Store_From_Reg_To_MemoryCell(reg1,m,Index_Of_Register,instructions[counter][2]);
+                    break;
+                case 4:
+                    operations::Move(reg1,instructions[counter][2],instructions[counter][3]);
+                    break;
+                case 5:
+                    operations::Add(reg1,Index_Of_Register,instructions[counter][2],instructions[counter][3]);
+                    break;
+                case 0xB:
+                    if(reg1.Get_Reg(Index_Of_Register) == reg1.Get_Reg(0)){
+                        counter = instructions[counter][2]/2;
+                    }
+                    else
+                        continue;
+                case 0xC:
+                    break;
+            }
+        }
+    }
+    void Execute_With_Display(vector<vector<int>>instructions){
+        for (counter = 0; counter < instructions.size() ; counter++) {
+            int opcode = instructions[counter][0];
+            int Index_Of_Register = instructions[counter][1];
+            switch (opcode) {
+                case 1:
+                    operations::Load_From_MemoryCell_To_Reg(reg1, m, instructions[counter][2],Index_Of_Register);
+                    Display();
+                    break;
+                case 2:
+                    operations::Load_Value_To_Reg(reg1,Index_Of_Register,instructions[counter][2]);
+                    Display();
+                    break;
+                case 3:
+                    if(instructions[counter][2] == 0)
+                        operations::Store_From_Reg_To_Screen(reg1,Index_Of_Register);
+                    else
+                        operations::Store_From_Reg_To_MemoryCell(reg1,m,Index_Of_Register,instructions[counter][2]);
+                    Display();
+                    break;
+                case 4:
+                    operations::Move(reg1,instructions[counter][2],instructions[counter][3]);
+                    Display();
+                    break;
+                case 5:
+                    operations::Add(reg1,Index_Of_Register,instructions[counter][2],instructions[counter][3]);
+                    Display();
+                    break;
+                case 0xB:
+                    if(reg1.Get_Reg(Index_Of_Register) == reg1.Get_Reg(0)){
+                        counter = instructions[counter][2]/2;
+                    }
+                    else
+                        continue;
+                    Display();
+                    break;
+                case 0xC:
+                    Display();
+                    break;
+            }
+        }
+    }
+};
+int main(){
+    cout.setf(std::ios::hex, std::ios::basefield);
+    Machine m;
+    fstream file;
+    cout<<"Enter the name of the file that contains the instructions : \n";
+    string name;
+    cin>>name;
+    file.open(name,ios ::in|ios ::out);
+    vector<vector<int>>instructions;
+    if(file.is_open()){
+        string line;
+        while (getline(file, line)) {
+            istringstream s(line);
+            vector<int>instruction;
+            int val;
+            while(s>>hex>>val){
+                instruction.push_back(val);
+            }
+            instructions.push_back(instruction);
+        }
+        file.close();
+        cout<<"choose what do you want : \n"
+              "1-Display the content of the registers after each instruction \n"
+              "2-Display the content of the registers after the program ends \n";
+        int x;
+        cin>>x;
+        switch (x) {
+            case 1:
+                m.Execute_With_Display(instructions);
+                break;
+            case 2:
+                m.Execute_Without_Display(instructions);
+                m.Display();
+                break;
+        }
+    }
+    else
+        cout<<"ERROR: Couldn't open the file \n ";
+}
