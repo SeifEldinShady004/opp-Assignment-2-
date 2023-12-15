@@ -32,7 +32,7 @@ int main() {
 
     cout << "n = " << n2 << " Output: ";
     binaryPrint(n2);
-    scout << endl;
+   cout << endl;
 
     cout << "n = " << n3 << " Output: ";
     binaryPrint(n3);
